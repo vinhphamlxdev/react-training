@@ -9,7 +9,7 @@ export default function useDisabled(condition = false) {
       opacity: isDisabled ? "0.5" : "1",
       cursor: isDisabled ? "not-allowed" : "pointer",
     };
-  }, []);
+  }, [isDisabled]);
   return {
     isDisabled,
     disabledStyle,

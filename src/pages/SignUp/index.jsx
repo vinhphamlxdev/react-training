@@ -8,6 +8,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { Field } from "../../components/Field";
 import { Input } from "../../components/Input";
 import useDisabled from "../../Hooks/useDisabled";
+import axios from "axios";
+import { LoadingButton } from "../../components/Loading";
 export const backgroundImageStyle = {
   backgroundImage: `url(${bg})`,
   backgroundPosition: "center",
@@ -45,9 +47,24 @@ export default function SignUp() {
     mode: "onChange",
     resolver: yupResolver(schemaValidate),
   });
-  console.log(errors);
-  const handleSignUp = (data) => {
-    console.log(data);
+  const handleSignUp = async (data) => {
+    try {
+      console.log(data);
+      const newData = {
+        title: "foo",
+        body: "bar",
+        userId: 1,
+      };
+      const response = await axios.post(
+        `https://jsonplaceholder.typicode.com/posts`,
+        newData
+      );
+      if (response.status === 201) {
+        console.log(response);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
   const { disabledStyle, isDisabled } = useDisabled(isSubmitting);
   return (
@@ -92,49 +109,33 @@ export default function SignUp() {
                 <div className="relative">
                   <Field>
                     <Input
-                      type="text"
+                      type="password"
                       name="password"
                       placeholder="Password"
                       control={control}
                       error={errors.password?.message}
                     />
                   </Field>
-                  {/* <i
-                        onClick={() => setShowPassword()}
-                        className={`bi absolute ${
-                          showPassword ? "bi-eye" : "bi-eye-slash"
-                        }  right-2 text-base cursor-pointer ${
-                          signupFormik.errors.password ? "top-5" : "top-2/4"
-                        }  -translate-y-2/4`}
-                      ></i> */}
                 </div>
                 <div className="relative">
                   <Field>
                     <Input
-                      type="text"
+                      type="password"
                       name="passwordConfirm"
                       placeholder="Password confirm"
                       control={control}
                       error={errors.passwordConfirm?.message}
                     />
                   </Field>
-                  {/* <i
-                        onClick={() => setShowPassword()}
-                        className={`bi absolute ${
-                          showPassword ? "bi-eye" : "bi-eye-slash"
-                        }  right-2 text-base cursor-pointer ${
-                          signupFormik.errors.password ? "top-5" : "top-2/4"
-                        }  -translate-y-2/4`}
-                      ></i> */}
                 </div>
               </div>
               <button
                 type="submit"
-                // disabled={isDisabled}
-                // style={disabledStyle}
+                disabled={isDisabled}
+                style={disabledStyle}
                 className="h-[50px] bg-bgCheckout whitespace-nowrap w-full bg-blue-500 text-white font-light rounded-md text-base undefined"
               >
-                Đăng Kí
+                {isSubmitting ? <LoadingButton /> : <span>Đăng Kí</span>}
               </button>
 
               <div className="mt-3 flex items-center gap-x-3">

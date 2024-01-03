@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import { useController } from "react-hook-form";
-
 const Input = ({
   name = "",
   placeholder = "",
@@ -15,6 +14,7 @@ const Input = ({
     name,
     defaultValue: "",
   });
+
   return (
     <InputStyles>
       <input
@@ -24,7 +24,7 @@ const Input = ({
         placeholder={placeholder}
         {...field}
       />
-      <span className="text-xs  font-normal text-red-500">{error || ""}</span>
+      <span className="text-xs font-normal text-red-500">{error || ""}</span>
     </InputStyles>
   );
 };
