@@ -41,15 +41,15 @@ export default function SignUp() {
   const {
     control,
     handleSubmit,
-
+    reset,
     formState: { errors, isValid, isSubmitting },
   } = useForm({
     mode: "onChange",
     resolver: yupResolver(schemaValidate),
   });
+  console.log(errors);
   const handleSignUp = async (data) => {
     try {
-      console.log(data);
       const newData = {
         title: "foo",
         body: "bar",
@@ -60,7 +60,8 @@ export default function SignUp() {
         newData
       );
       if (response.status === 201) {
-        console.log(response);
+        alert("Đăng kí thành công");
+        reset();
       }
     } catch (error) {
       console.log(error);
@@ -68,10 +69,7 @@ export default function SignUp() {
   };
   const { disabledStyle, isDisabled } = useDisabled(isSubmitting);
   return (
-    <div
-      style={backgroundImageStyle}
-      className="inset-0 bg-white relative  bg-signup gap-x-5"
-    >
+    <div className="inset-0 bg-white relative  bg-signup gap-x-5">
       {/* {isLoading && <LoadingSpinner />} */}
       <div className="absolute px-10 left-10 top-5  py-10">
         <div></div>
